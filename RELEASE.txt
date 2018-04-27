@@ -1,0 +1,126 @@
+/**********************************************/
+/*           CMSI Writer library              */
+/**********************************************/
+
+Release 0.20
+++++++++++++
+- Add call to OCC operation
+
+Release 0.19
+++++++++++++
+- Add call to Resources Update operation
+
+Release 0.18
+++++++++++++
+- Update of xsd for contract takeover
+- Modifications for ContractTakeover operation
+
+Release 0.17
+++++++++++++
+- Update the DAO and CMSIParameters to be able to insert data in column 'ADDITIONAL_INFO' of table CMS_INT
+
+Release 0.16
+++++++++++++
+- Change data type for CMS_INT.INSERTION_DATE to timestamp
+
+Release 0.15
+++++++++++++
+Update:
+- New Factory to not create a new connection to the database for each execution
+
+Release 0.14
+++++++++++++
+Update:
+- XSD updated
+
+Release 0.13
+++++++++++++
+2011-01-04
+Add:
+- Parameter 'cmsi.parent.request.id.activated' is a new configuration item
+Update:
+- insert() in the DAO can now performed insertion without PARENT_REQUEST_ID in the request
+- insertBatch() in the DAO can now performed insertion without PARENT_REQUEST_ID in the request
+- DAO closes correctly the preparedStatements
+- Clob is now displayed as a correct String
+
+Release 0.12
+++++++++++++
+2010-12-20
+Update:
+- customer types bean
+- payment bean
+- getOutputArgs() in the DAO can now performed action upon historised requests
+
+Release 0.11
+++++++++++++
+2010-12-16
+Add:
+- Method to make payments
+
+Release 0.10
+++++++++++++
+2010-12-06
+Add:
+- Write in DB with UTF-8 mode
+
+Release 0.9
++++++++++++
+2010-11-27
+Update:
+- adding the function for insertion in the table CMS_INT using a jdbc batch (for performances purposes : use only one connection)
+- close the prepared statement after each use
+- modify service access fee object update => add access fee period
+
+Release 0.8
++++++++++++
+2010-10-16
+Update:
+- Oracle DAO => Change the connection method to the database
+
+Release 0.7
++++++++++++
+2010-10-12
+Add:
+- Oracle DAO => Function to get the next valid request id
+- Xml interface => Function to modify the access fee of a service
+Update:
+- Oracle DAO => Allows the caller to give the request id in CMSI parameters
+
+Release 0.6
++++++++++++
+2010-10-01
+Update:
+- Oracle DAO => Connections were not released after process, aiming to a reach of maximum opened cursors.
+
+Release 0.5
++++++++++++
+2010-08-18
+Add:
+- getStatus feature => A procedure of XmlGeneratorI that allows to get the status of a given request id
+- getOutputArgs feature => A procedure of XmlGeneratorI that allows to get the status of a given request id
+
+Release 0.4
++++++++++++
+2010-08-17
+Update:
+- Converted to a Maven project
+- Upgrading from oracle 9 (Oracle-9.2i-JDBC.jar) to oracle 10 (ojdbc14-10.2.0.3.0.jar)
+- Changing the initialization of the data source.
+
+Release 0.3
++++++++++++
+2010-07-23
+Update:
+- Beans according to the new XSD files
+
+Release 0.2
++++++++++++
+2010-07-12
+Update:
+- Beans according to the new XSD files
+
+Release 0.1
++++++++++++
+2010-06-30
+Creation of the library

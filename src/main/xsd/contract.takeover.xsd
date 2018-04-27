@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="customer">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Contract Id to be moved (mandatory) -->
+                <xs:element name="co_id" type="xs:long"></xs:element>
+
+                <!-- Customer Id of the holder of the new contract (mandatory) -->
+                <xs:element name="new_cs_id" type="xs:long"></xs:element>
+
+                <!-- Reason of the move (mandatory) -->
+                <xs:element name="reason" type="xs:long"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

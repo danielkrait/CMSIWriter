@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- CUSTOMER_ALL.CUSTOMER_ID -->
+				<xs:element name="id" type="custIdType" minOccurs="1"></xs:element>
+
+				<!-- CUSTOMER_ALL.BUSINESS_PARTNER_IND -->
+				<!-- This parameter does not exist in CMS v8 -->
+				<!-- This parameter does not exist in CMS iXr2 -->
+				<xs:element name="is_business_partner"
+					type="xs:boolean" minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.PAYMNTRESP -->
+				<!-- For the root node it must be set to true. -->
+				<xs:element name="is_payment_resp"
+					type="xs:boolean" minOccurs="0">
+				</xs:element>
+				<!-- MPUTMTAB.TMCODE & CUSTOMER_ALL.TMCODE -->
+				<xs:element name="occ_rate_plan_code"
+					type="xs:integer" minOccurs="0">
+				</xs:element>
+				<!-- PRICEGROUP_ALL.PRGCODE & CUSTOMER_ALL.PRGCODE -->
+				<xs:element name="price_group_code" type="xs:integer"
+					minOccurs="0"></xs:element>
+				<!-- CUSTOMER_ALL.CSPASSWORD -->
+				<xs:element name="password" type="xs:string"
+					minOccurs="0">
+				</xs:element>
+				
+				<!-- BILLING_ACCOUNT -->
+				<!-- This parameter does not exist in CMS v8 -->
+				<xs:element name="billing_account" type="billingAccountType"
+					minOccurs="0"></xs:element>
+
+				<!-- CUSTOMER_FAMILY.FAMILY_ID -->
+				<!-- This parameter does not exist in CMS v8 -->
+				<!-- Should not be set in case of business partner -->
+				<xs:element name="family_id" type="xs:integer"
+					minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.EXTERNAL_CUSTOMER_ID -->
+				<xs:element name="external_customer_id"
+					type="xs:integer" minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.EXTERNAL_CUSTOMER_SET_ID -->
+				<xs:element name="external_customer_set_id"
+					type="xs:integer" minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.COSTCENTER_ID -->
+				<xs:element name="cost_center" type="xs:integer"
+					minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.BILLCYCLE -->
+				<xs:element name="billing_cycle" type="xs:string"
+					minOccurs="0">
+				</xs:element>
+				<!-- INDIVIDUAL_TAXATION.CUSTOMERCAT_CODE & CUSTOMERCAT_CODE.CUSTOMERCAT_CODE -->
+				<xs:element name="custcat_code" type="xs:integer"
+					minOccurs="0">
+				</xs:element>
+				<!-- TRADE_ALL.TRADECODE & CUSTOMER_ALL.CSTRADECODE -->
+				<xs:element name="trade_code" type="xs:string"
+					minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.CSCLIMIT -->
+				<xs:element name="credit_limit" minOccurs="0"
+					type="moneyType">
+				</xs:element>
+				<!-- CUSTOMER_ALL.CSCREDIT_REMARK -->
+				<!-- This parameter does not exist in CMS v8 -->
+				<xs:element name="cs_credit_remark" minOccurs="0"
+					type="xs:string">
+				</xs:element>
+				
+				<!-- CUSTOMER_ALL.CSREMARK_1 -->
+				<xs:element name="cs_remark1" minOccurs="0"
+					type="xs:string">
+				</xs:element>
+				<!-- CUSTOMER_ALL.CSREMARK_2 -->
+				<xs:element name="cs_remark2" minOccurs="0"
+					type="xs:string">
+				</xs:element>
+				
+				<xs:element name="address" minOccurs="0"
+					type="customerAddressForModification">
+				</xs:element>
+
+				<xs:element name="payment_arrangement" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- PAYMENTTYPE_ALL.PAYMENT_ID & PAYMENT_ALL.PAYMENT_TYPE -->
+							<xs:element name="payment_method_id"
+								type="xs:integer">
+							</xs:element>
+							<!-- PAYMENT_ALL.BANKACCNO -->
+							<xs:element name="account_no"
+								type="xs:string">
+							</xs:element>
+							<!-- PAYMENT_ALL.ACCOUNTOWNER -->
+							<xs:element name="account_owner"
+								type="xs:string">
+							</xs:element>
+							<!-- PAYMENT_ALL.BANKNAME -->
+							<xs:element name="bank_name"
+								type="xs:string">
+							</xs:element>
+							<!-- PAYMENT_ALL.BANKZIP -->
+							<xs:element name="bank_zip"
+								type="xs:string">
+							</xs:element>
+							<!-- PAYMENT_ALL.BANKCITY -->
+							<xs:element name="bank_city"
+								type="xs:string">
+							</xs:element>
+							<!-- PAYMENT_ALL.SWIFTCODE -->
+							<xs:element name="swift" type="xs:string"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="taxExemption" type="taxExemptionType"
+					minOccurs="0" maxOccurs="unbounded">
+				</xs:element>
+
+				<xs:element name="additional_info" minOccurs="0"
+					maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"></xs:element>
+							<xs:element name="value" type="xs:string"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

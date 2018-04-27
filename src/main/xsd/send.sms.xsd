@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- CMS SMS.SEND (Non Kernal)-->
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="send_sms">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- FP_SMS_INTERFACE.DIR_NUM --> 
+				<xs:element name="DIR_NUM"
+					type="xs:string" minOccurs="1">
+				</xs:element>
+				<!-- FP_SMS_INTERFACE.SMS_TEXT --> 
+				<xs:element name="SMS_TEXT"
+					type="xs:string" minOccurs="1">
+				</xs:element>
+				<xs:element name="MODULE"
+					type="xs:string" minOccurs="1">
+				</xs:element>
+				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

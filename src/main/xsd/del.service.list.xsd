@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd"/>
+	
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+
+				<xs:element name="contract" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="contractIdType">
+							</xs:element>
+							
+                            <xs:element name="target_rateplan_code"	minOccurs="0" type="xs:long"></xs:element>
+							<xs:element name="service" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="sncode" type="xs:integer"> </xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

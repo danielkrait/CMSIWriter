@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <!-- Be careful, the command FAMILY_MEMBER.MOVE is not
+	        available for version 8 of BSCS. Can only be used for V9 or V iX r2. -->
+    
+    <xs:include schemaLocation="customer_types.xsd"/>
+    
+    <xs:element name="customer">
+        <xs:complexType>
+            <xs:sequence>
+            	<!-- CUSTOMER_FAMILY.CUSTOMER_ID --> 
+                <xs:element name="cs_id" type="xs:integer"></xs:element>
+                <!-- CUSTOMER_FAMILY.FAMILY_ID -->
+            	<xs:element name="source_family_id" type="xs:integer"></xs:element>
+            	<xs:element name="target_family_id" type="xs:integer"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+       
+</xs:schema>

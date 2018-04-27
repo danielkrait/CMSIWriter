@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="payment">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element name="TRANSX-CODE" type="xs:string" minOccurs="0"></xs:element>
+            	
+                <!-- PAYMENT.WRITE.CS_ID -> PIHTAB_ALL.CUSTOMER_ID -->
+                <xs:element name="cs_id" type="xs:integer"></xs:element>
+                <!-- PAYMENT.WRITE.BT_OHXACT -> PIHTAB_ALL.OHXACT (only mandatory for BILL payment) -->
+                <xs:element name="ohxact" minOccurs="0" type="xs:integer"></xs:element>
+                <!-- PAYMENT.WRITE.GLA_CASH -> GLACCOUNT_ALL (GLATYPE=1) -->
+                <xs:element name="glacode" type="xs:string"></xs:element>
+                <!-- PAYMENT.WRITE.RT_CACHKAMT_PAY -> PIHTAB_ALL.CACHKAMT -->
+                <xs:element name="amount" type="xs:double" minOccurs="0"></xs:element>
+                <!-- FORCURR.FCCODE -> PIHTAB_ALL.CURRENCY -->
+                <xs:element name="currency" type="xs:string" minOccurs="0"></xs:element>
+                <!-- PAYMENT.WRITE.PAYMENT_CURRENCY_ID -> FORCURR.FC_ID (use MAJOR_CURRENCY.FC_ID WHERE CURRENCY_TYPE='HO') -->
+                <xs:element name="currency_id" type="xs:integer" minOccurs="0"></xs:element>
+                <!-- PAYMENT.WRITE.PAYMENT_MODE -> PAYMENTTYPE_ALL  -->
+                <xs:element name="payment_mode" type="xs:string" minOccurs="0"></xs:element>
+                <!-- PAYMENT.WRITE.RT_CACHKNUM -> PIHTAB_ALL.CACHKNUM -->
+                <xs:element name="reference" type="xs:string"></xs:element>
+                <!-- PAYMENT.WRITE.RT_CACHKDATE -> PIHTAB_ALL.CACHKDATE -->
+                <xs:element name="cachkdate" type="xs:date" minOccurs="0"></xs:element>
+                <!-- PAYMENT.WRITE.RT_CARECDATE -> PIHTAB_ALL.CARECDATE -->
+                <xs:element name="carecdate" type="xs:date" minOccurs="0"></xs:element>
+                <!-- if this field is not present, CMSInterface will insert CMS_INT.REQUEST_ID in PIHTAB_ALL.CAREM -->
+                <xs:element name="remark" type="xs:string" minOccurs="0" ></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

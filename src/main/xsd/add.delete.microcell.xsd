@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="microcells_info">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- MPUFFTAB.CO_ID -->
+				<xs:element name="CO_ID" type="xs:string" minOccurs="0">
+				</xs:element>
+				<!-- CONTRACT_ALL.CO_ID -->
+				<xs:element name="CO_ID_PUB" type="xs:string" minOccurs="0">
+				</xs:element>
+				<!-- MPUFFTAB.CUSTOMER_ID -->
+				<xs:element name="CS_ID" type="xs:string" minOccurs="0">
+				</xs:element>
+				<!-- CUSTOMER_ALL.CUSTNUM -->
+				<xs:element name="CS_ID_PUB" type="xs:string" minOccurs="0">
+				</xs:element>
+				<xs:element name="microcells" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- CMPUFFTAB.FFCODE -->
+							<xs:element name="IMC_FFCODE" type="xs:long"
+								minOccurs="0">
+							</xs:element>
+							<!-- CMPUFFTAB.FFCODE_PUB -->
+							<xs:element name="IMC_FFCODE_PUB" type="xs:string"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.DES -->
+							<xs:element name="IMC_DES" type="xs:string" minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.SHDES -->
+							<xs:element name="IMC_SHDES" type="xs:string"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.SCALEFACTOR -->
+							<xs:element name="IMC_SCALEFACTOR" type="xs:double"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.IMC_SCALEFACTOR_TYPE -->
+							<xs:element name="IMC_SCALEFACTOR_TYPE" type="xs:string"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.UNSPECIFIC_ORIGIN -->
+							<xs:element name="IMC_UNSPECIFIC_ORIGIN" type="xs:boolean"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.CLOSURE -->
+							<xs:element name="IMC_CLOSURE" type="xs:string"
+								minOccurs="0">
+							</xs:element>
+							<!-- MPUFFTAB.B_NUMBER_CATEGORY -->
+							<xs:element name="B_NUMBER_CATEGORY" type="xs:integer"
+								minOccurs="0">
+							</xs:element>
+							<xs:element name="microcell_members" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<!-- MPULKFXO.FF_ELEMENT_SEQNO -->
+										<xs:element name="IMC_SEQ" type="xs:long"
+										minOccurs="0">
+										</xs:element>
+										<!-- MPULKFXO.ORIGIN -->
+										<xs:element name="ORIGIN" type="xs:string"
+										minOccurs="0">
+										</xs:element>
+										<!-- MPULKFXO.ORIGIN_NPCODE -->
+										<xs:element name="ORIGIN_NPCODE" type="xs:long"
+										minOccurs="0">
+										</xs:element>
+										<!--  -->
+										<xs:element name="IMC_ORIGIN_NP_PUB" type="xs:string"
+										minOccurs="0">
+										</xs:element>
+										<!-- MPULKFXO.DESTINATION -->
+										<xs:element name="DESTINATION" type="xs:string"
+										minOccurs="0">
+										</xs:element>
+										<!-- MPULKFXO.DEST_NPCODE -->
+										<xs:element name="DEST_NPCODE" type="xs:long"
+										minOccurs="0">
+										</xs:element>
+										<!-- -->
+										<xs:element name="IMC_DEST_NP_PUB" type="xs:string"
+										minOccurs="0">
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema> 

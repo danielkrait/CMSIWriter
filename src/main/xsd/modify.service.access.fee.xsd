@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="contract" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- CONTRACT_ALL.CO_ID -->
+							<xs:element name="id" type="contractIdType" />
+							<xs:element name="service" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="sncode" type="xs:integer"></xs:element>
+										<xs:element name="accessFee" type="xs:double"></xs:element>
+										<xs:element name="accessFeeType" type="xs:string"></xs:element>
+										<xs:element name="accessFeePrd" type="xs:integer"></xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

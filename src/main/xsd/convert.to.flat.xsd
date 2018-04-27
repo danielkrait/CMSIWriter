@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+	
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- CUSTOMER_ALL.CUSTOMER_ID -->
+				<xs:element name="id" type="custIdType" />
+				<!-- RATEPLAN.TMCODE -->
+				<xs:element name="tmcode" type="xs:long" 
+					minOccurs="0" />
+				<!-- CUSTOMER_ALL.BILLCYCLE -->
+				<xs:element name="billing_cycle" type="xs:string"
+					minOccurs="0" />
+				<!-- PRICEGROUP_ALL.PRGCODE & CUSTOMER_ALL.PRGCODE -->
+				<xs:element name="price_group_code" type="xs:integer"
+					minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Appel à la commande NPTEACTION.ADD   (Non Kernal)-->
+	<xs:element name="trace_npteaction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="npteaction" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							
+							<xs:element name="CONTRACT_ID"
+								type="xs:long">
+							</xs:element>
+							
+							<xs:element name="ACTION_ID"
+								type="xs:long">
+							</xs:element>
+							
+							<xs:element name="DN_AFFECTED"
+								type="xs:string">
+							</xs:element>
+							
+							<xs:element name="Action_User"
+								type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

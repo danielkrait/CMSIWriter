@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="contract" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="contractIdType"></xs:element>
+							<xs:element name="ENABLED" type="xs:boolean"></xs:element>
+							<xs:element name="CREDIT_LIMIT_DAYS" type="xs:integer"></xs:element>
+							<xs:element name="DAILY_CH_AMOUNT" type="xs:float"></xs:element>
+							<xs:element name="DAILY_THRESHOLD1" type="xs:long"></xs:element>
+							<xs:element name="PERIOD_CH_AMOUNT" type="xs:float"></xs:element>
+							<xs:element name="PERIOD_THRESHOLD1" type="xs:long"></xs:element>
+							<xs:element name="START_DATE" type="xs:date"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

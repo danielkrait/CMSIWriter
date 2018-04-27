@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:include schemaLocation="customer_types.xsd"/>
+    
+    <xs:element name="customer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contract">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="contractIdType"></xs:element>
+                            <!-- CONTRACT.WRITE.CO_DN_RETENTION -->
+                            <!-- this tag is only usefull in case of deactivation : if not present
+                            "No retention" is assumed
+                            -->
+                            <xs:element name="dn_retention_mode" minOccurs="0" type="xs:integer"></xs:element>
+                            <!-- CONTRACT.WRITE.CO_DEV_RETENTION -->
+                            <!-- this tag is only useful in case of deactivation : if not present
+                            value of DN_RETENTION is assumed
+                            NB: CO_PORT_RETENTION will automatically get the same value as CO_DEV_RETENTION
+                            -->
+                            <xs:element name="dev_retention_mode" minOccurs="0" type="xs:integer"></xs:element>
+                            <xs:element name="reason" minOccurs="0" type="xs:integer"></xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

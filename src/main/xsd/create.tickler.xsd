@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+	
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- TICKLER_RECORDS.CUSTOMER_ID -->
+				<xs:element name="id" type="custIdType" 
+					minOccurs="0" maxOccurs="1">
+				</xs:element>
+				
+				<!-- TICKLER_RECORDS.CO_ID -->
+				<xs:element name="contract" type="contractIdType" 
+					minOccurs="0" maxOccurs="1">
+				</xs:element>
+				
+				<xs:element name="tickler" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- TICKLER_RECORDS.FOLLOW_UP_USER -->
+							<xs:element name="follow_up_user" type="xs:string"
+								minOccurs="0">
+							</xs:element>
+							
+							<!-- TICKLER_RECORDS.TICKLER_CODE -->
+							<!-- Should be a value from TICKLER_CODE_DEF table -->
+							<xs:element name="tickler_code" type="xs:string">
+							</xs:element>
+							
+							<!-- TICKLER_RECORDS.TICKLER_STATUS -->
+							<xs:element name="tickler_status" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="NOTE"/>
+										<xs:enumeration value="OPEN"/>
+										<xs:enumeration value="CLOSED"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							
+							<!-- TICKLER_RECORDS.LONG_DESCRIPTION -->
+							<xs:element name="tickler_desc" type="xs:string" 
+								minOccurs="0">
+							</xs:element>
+							
+							<!-- TICKLER_RECORDS.SHORT_DESCRIPTION -->
+							<xs:element name="tickler_shdes" type="xs:string" 
+								minOccurs="0">
+							</xs:element>
+							
+							<!-- TICKLER_RECORDS.PRIORITY -->
+							<xs:element name="tickler_priority" type="xs:integer"
+								minOccurs="0">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

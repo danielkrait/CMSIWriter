@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd"/>
+
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="contract" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- CONTRACT_ALL.CO_ID -->
+							<xs:element name="id" type="contractIdType" />
+							<xs:element name="action">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="A"/><!-- Activate -->
+										<xs:enumeration value="D"/><!-- Deactivate -->
+										<xs:enumeration value="M"/><!-- Modify -->
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!-- Itemize value. Mandatory for activate and modify action -->
+							<xs:element name="itemize_value" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

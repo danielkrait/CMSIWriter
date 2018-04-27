@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:group name="sp">
+		<xs:sequence>
+			<xs:element name="target_rateplan_code" type="xs:long"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="source_service_package_code" type="xs:long"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="target_service_package_code" type="xs:long"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:group name="info">
+		<xs:sequence>
+			<xs:element name="additional_info" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="xs:string"></xs:element>
+						<xs:element name="value" type="xs:string"></xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="co_op_dir" type="xs:boolean" minOccurs="0"></xs:element>
+
+			<xs:element name="co_signed_date" type="xs:date"
+				minOccurs="0"></xs:element>
+
+		</xs:sequence>
+
+
+	</xs:group>
+
+	<xs:element name="customer">
+		<xs:complexType>
+			<xs:sequence>
+
+				<xs:element name="contract" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="contractIdType"></xs:element>
+							<!-- Only one of these elements should be set -->
+							<xs:choice>
+								<!-- The corresponding action is the modification of product only -->
+								<xs:group ref="sp">
+								</xs:group>
+
+								<!--
+									The corresponding action is the modification of the contract
+									only
+								-->
+								<xs:group ref="info">
+								</xs:group>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

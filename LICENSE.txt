@@ -1,0 +1,5 @@
+/**********************************************/
+/*           CMSI Writer library              */
+/**********************************************/
+
+Copyright (c) 2010 ALCATEL-LUCENT - All rights reserved

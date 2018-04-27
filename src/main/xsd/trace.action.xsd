@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- FFACTION.ADD, HCACTION.ADD, MSACTION.ADD, FILFACTION.ADD, NPTEACTION.ADD, 
+or OIACTION.ADD  (Non Kernal): The command to use will depend on TABLE_NAME argument-->
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="trace_action">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="action" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!-- TABLE_NAME.CONTRACT_ID -->
+							<xs:element name="CONTRACT_ID"
+								type="xs:long">
+							</xs:element>
+							<!-- TABLE_NAME.ACTION_ID -->
+							<xs:element name="ACTION_ID"
+								type="xs:long">
+							</xs:element>
+							<!-- TABLE_NAME.DN_AFFECTED -->
+							<xs:element name="DN_AFFECTED"
+								type="xs:string">
+							</xs:element>
+							<!-- TABLE_NAME.Action_User -->
+							<xs:element name="Action_User"
+								type="xs:string">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

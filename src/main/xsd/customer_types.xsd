@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:complexType name="custIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:integer">
+				<xs:attribute name="type" type="xs:string" fixed="cs_id"
+					use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="contractIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:integer">
+				<xs:attribute name="type" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="co_id"></xs:enumeration>
+							<xs:enumeration value="msisdn"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<!-- CONTRACT_ALL        table provides cs_id <-> co_id mapping -->
+	<!-- PR_SERV_STATUS_HIST table provides co_id <-> sncode mapping -->
+	<xs:complexType name="contractType">
+		<xs:sequence>
+			<xs:element name="status" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:enumeration value="1" /> <!-- On Hold -->
+						<xs:enumeration value="2" /> <!-- Activation -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<!--
+				-1 : No assignment 0 : Default Billing Account id Others : Billing
+				Account Id to assign the contract
+			-->
+			<xs:element name="billing_account_assignment" type="xs:long"
+				minOccurs="0">
+			</xs:element>
+
+			<xs:element name="device" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<!--
+							SELECT SM_SERIALNUM FROM STORAGE_MEDIUM WHERE SM_STATUS='r' AND
+							PLCODE=67 (67 corresponding to current country in MPDPLTAB)
+						-->
+						<xs:element name="storage_medium_number" type="xs:string">
+						</xs:element>
+						<!--
+							SELECT PORT_NUM FROM PORT WHERE PORT_STATUS='r' AND PLCODE=67 (67
+							corresponding to current country in MPDPLTAB) AND HLCODE=1 (1
+							corresponding to HLR in MPDHLTAB) AND PORT_NPCODE=60 (60
+							corresponding to IMSI numbering plan in MPDNPTAB)
+						-->
+						<!-- This option is not allowed on BSCS V8 -->
+						<xs:element name="port_number" type="portType">
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- MPUTMTAB.TMCODE & CONTRACT_ALL.TMCODE -->
+			<xs:element name="rate_plan_code" type="xs:integer"></xs:element>
+
+			<!--
+				SELECT PL.PLCODE, PL.SCCODE, MK.SUBM_ID FROM MPDPLTAB PL,SUB_MARKET
+				MK WHERE PLMNTYPE='H' AND PL.SCCODE=MK.SCCODE
+			-->
+			<!-- CONTRACT_ALL.PLCODE -->
+			<xs:element name="network_code" type="xs:integer"></xs:element>
+			<!-- CONTRACT_ALL.SCCODE -->
+			<xs:element name="market_code" type="xs:integer"></xs:element>
+			<!-- CONTRACT_ALL.SUBM_ID -->
+			<xs:element name="submarket_code" type="xs:integer"></xs:element>
+			<!-- MDSRRTAB.ACTION_DATE -->
+			<xs:element name="valid_from" type="xs:date" minOccurs="0"></xs:element>
+
+			<xs:element name="dealer_id" minOccurs="0" type="xs:long">
+			</xs:element>
+
+			<!-- Call detail -->
+			<!-- Not available in BSCS v8 -->
+			<xs:group ref="cd" minOccurs="0">
+			</xs:group>
+
+			<xs:element name="installation_address" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="first_name" type="xs:string"
+							minOccurs="0"></xs:element>
+						<xs:element name="last_name" type="xs:string"
+							minOccurs="0"></xs:element>
+						<xs:element name="street" type="xs:string"></xs:element>
+						<xs:element name="house_no" type="xs:string"></xs:element>
+						<xs:element name="zip_code" type="xs:string"></xs:element>
+						<xs:element name="city" type="xs:string"></xs:element>
+						<xs:element name="state" type="xs:string"></xs:element>
+						<xs:element name="country_id" type="xs:integer">
+						</xs:element>
+						<xs:element name="address_note_1" type="xs:string">
+						</xs:element>
+						<xs:element name="address_note_2" type="xs:string">
+						</xs:element>
+						<xs:element name="address_note_3" type="xs:string">
+						</xs:element>
+						<xs:element name="email" type="xs:string" minOccurs="0">
+						</xs:element>
+						<xs:element name="remark" type="xs:string" minOccurs="0">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="additional_info" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="xs:string"></xs:element>
+						<xs:element name="value" type="xs:string"></xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="service" type="serviceType" maxOccurs="unbounded">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:group name="cd">
+		<xs:sequence>
+			<!-- CONTRACT_ALL.CDS_GENERATION -->
+			<xs:element name="call_detail">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="R" /> <!-- On request -->
+						<xs:enumeration value="P" /> <!-- Periodically -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- CONTRACT_ALL.CDS_BILL_MEDIUM -->
+			<xs:element name="billing_medium" type="xs:long" />
+		</xs:sequence>
+	</xs:group>
+
+
+	<!-- CCONTACT_ALL 	table provide cs_id <-> ccseq mapping -->
+	<!-- Used only for address creation (mandatory fields) -->
+	<xs:complexType name="customerAddress">
+		<xs:sequence>
+			<!-- CCONTACT_ALL.CCXXXX -> ADDRESS.WRITE.ADR_ROLES -->
+			<!-- B=bill address, C=Contract Address, D=Directory Address, -->
+			<!--
+				E=Temporary Bill Address, I=Detailed Bill Address, P=Magazine
+				Address
+			-->
+			<!-- R=Previous Bill Address, S=Shipment Address, U=user address -->
+			<xs:element name="roles" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="role" minOccurs="1" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="B" />
+									<xs:enumeration value="C" />
+									<xs:enumeration value="D" />
+									<xs:enumeration value="E" />
+									<xs:enumeration value="I" />
+									<xs:enumeration value="P" />
+									<xs:enumeration value="R" />
+									<xs:enumeration value="S" />
+									<xs:enumeration value="U" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- CUSTOMER_ALL.CSCUSTTYPE (B=company or C=private) -->
+			<xs:element name="custtype" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCFNAME -->
+			<xs:element name="first_name" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCMNAME -->
+			<xs:element name="middle_name" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCLNAME -->
+			<xs:element name="last_name" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCNAME -->
+			<xs:element name="full_name" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTITLE & TITLE.TTL_ID -->
+			<xs:element name="title" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCSEX (F=female, M=male) -->
+			<xs:element name="sex" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="F" />
+						<xs:enumeration value="M" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCEMAIL -->
+			<xs:element name="email" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDRYEARS -->
+			<xs:element name="address_years" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCSMSNO -->
+			<xs:element name="sms_no" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCJOBDESC -->
+			<xs:element name="job_desc" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCTN -->
+			<xs:element name="cctn" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN_AREA -->
+			<xs:element name="cctn_area" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN2 -->
+			<xs:element name="cctn2" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN2_AREA -->
+			<xs:element name="cctn2_area" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCFAX -->
+			<xs:element name="fax" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCFAX_AREA -->
+			<xs:element name="fax_area" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCREMARK -->
+			<xs:element name="remark" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCSTREET -->
+			<xs:element name="street" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCSTREETNO -->
+			<xs:element name="house_no" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCZIP -->
+			<xs:element name="zip_code" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCCITY -->
+			<xs:element name="city" type="xs:string"></xs:element>
+			<!-- CCONTACT_ALL.CCSTATE -->
+			<xs:element name="state" type="xs:string"></xs:element>
+			<!-- COUNTRY.COUNTRY_ID & CCONTACT_ALL.COUNTRY -->
+			<xs:element name="country_id" type="xs:integer"></xs:element>
+
+			<!-- CCONTACT_ALL.CCLANGUAGE & LANGUAGE.LNG_ID -->
+			<xs:element name="language" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.BIRTHDATE -->
+			<xs:element name="birth_date" type="xs:date" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCADDR1 -->
+			<xs:element name="address_note_1" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDR2 -->
+			<xs:element name="address_note_2" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDR3 -->
+			<xs:element name="address_note_3" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- COUNTRY.COUNTRY_ID & CCONTACT_ALL.CSNATIONALITY -->
+			<xs:element name="nationality" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+
+			<!--
+				CCONTACT_ALL.ID_TYPE to be used to identify the type of passportno
+			-->
+			<xs:element name="id_type" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.PASSPORTNO -->
+			<xs:element name="passportno" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSSOCIALSECNO -->
+			<xs:element name="social_sec_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSDRIVELICENCE -->
+			<xs:element name="drive_licence_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSCOMPREGNO -->
+			<xs:element name="company_reg_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSCOMPTAXNO -->
+			<xs:element name="company_tax_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.EMPLOYEE -->
+			<xs:element name="is_employee" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<!-- MARITAL_STATUS.MAS_ID & CCONTACT_ALL.MARITAL_STATUS -->
+			<xs:element name="marital_status" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- CCONTACT_ALL 	table provide cs_id <-> ccseq mapping -->
+	<!-- Used only for modification -->
+	<xs:complexType name="customerAddressForModification">
+		<xs:sequence>
+			<!-- CCONTACT_ALL.CCSEQ -->
+			<!-- Used in case of address update. -->
+			<!-- Leave empty in case of new address to be created. -->
+			<xs:element name="id" minOccurs="0" />
+
+			<!-- CCONTACT_ALL.CCXXXX -> ADDRESS.WRITE.ADR_ROLES -->
+			<!-- B=bill address, C=Contract Address, D=Directory Address, -->
+			<!--
+				E=Temporary Bill Address, I=Detailed Bill Address, P=Magazine
+				Address
+			-->
+			<!-- R=Previous Bill Address, S=Shipment Address, U=user address -->
+			<xs:element name="roles" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="role" minOccurs="1" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="B" />
+									<xs:enumeration value="C" />
+									<xs:enumeration value="D" />
+									<xs:enumeration value="E" />
+									<xs:enumeration value="I" />
+									<xs:enumeration value="P" />
+									<xs:enumeration value="R" />
+									<xs:enumeration value="S" />
+									<xs:enumeration value="U" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<!-- CUSTOMER_ALL.CSCUSTTYPE (B=company or C=private) -->
+			<xs:element name="custtype" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCFNAME -->
+			<xs:element name="first_name" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCMNAME -->
+			<xs:element name="middle_name" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCLNAME -->
+			<xs:element name="last_name" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCNAME -->
+			<xs:element name="full_name" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTITLE & TITLE.TTL_ID -->
+			<!-- To put 'None' value, set this value : "-9223372036854775808"-->
+			<xs:element name="title" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCSEX (F=female, M=male) -->
+			<xs:element name="sex" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="F" />
+						<xs:enumeration value="M" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCEMAIL -->
+			<xs:element name="email" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDRYEARS -->
+			<xs:element name="address_years" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCSMSNO -->
+			<xs:element name="sms_no" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCJOBDESC -->
+			<xs:element name="job_desc" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCTN -->
+			<xs:element name="cctn" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN_AREA -->
+			<xs:element name="cctn_area" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN2 -->
+			<xs:element name="cctn2" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCTN2_AREA -->
+			<xs:element name="cctn2_area" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCFAX -->
+			<xs:element name="fax" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCFAX_AREA -->
+			<xs:element name="fax_area" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCREMARK -->
+			<xs:element name="remark" type="xs:string" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCSTREET -->
+			<xs:element name="street" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCSTREETNO -->
+			<xs:element name="house_no" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCZIP -->
+			<xs:element name="zip_code" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCCITY -->
+			<xs:element name="city" type="xs:string" minOccurs="0"></xs:element>
+			<!-- CCONTACT_ALL.CCSTATE -->
+			<xs:element name="state" type="xs:string" minOccurs="0"></xs:element>
+			<!-- COUNTRY.COUNTRY_ID & CCONTACT_ALL.COUNTRY -->
+			<xs:element name="country_id" type="xs:integer" minOccurs="0"></xs:element>
+
+			<!-- CCONTACT_ALL.CCLANGUAGE & LANGUAGE.LNG_ID -->
+			<xs:element name="language" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.BIRTHDATE -->
+			<xs:element name="birth_date" type="xs:date" minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.CCADDR1 -->
+			<xs:element name="address_note_1" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDR2 -->
+			<xs:element name="address_note_2" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CCADDR3 -->
+			<xs:element name="address_note_3" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- COUNTRY.COUNTRY_ID & CCONTACT_ALL.CSNATIONALITY -->
+			<xs:element name="nationality" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+
+			<!--
+				CCONTACT_ALL.ID_TYPE to be used to identify the type of passportno
+			-->
+			<xs:element name="id_type" type="xs:integer" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.PASSPORTNO -->
+			<xs:element name="passportno" type="xs:string" minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSSOCIALSECNO -->
+			<xs:element name="social_sec_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSDRIVELICENCE -->
+			<xs:element name="drive_licence_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSCOMPREGNO -->
+			<xs:element name="company_reg_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<!-- CCONTACT_ALL.CSCOMPTAXNO -->
+			<xs:element name="company_tax_no" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+
+			<!-- CCONTACT_ALL.EMPLOYEE -->
+			<xs:element name="is_employee" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<!-- MARITAL_STATUS.MAS_ID & CCONTACT_ALL.MARITAL_STATUS -->
+			<xs:element name="marital_status" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+
+			<xs:element name="valid_date" type="xs:date" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- PORT -->
+	<xs:complexType name="portType">
+		<xs:sequence>
+			<!--
+				SELECT PORT_NUM FROM PORT WHERE PLCODE=67 AND HLCODE=1 AND
+				PORT_NPCODE=60
+			-->
+
+			<!-- PORT.PORT_NUM -->
+			<xs:element name="portnum" type="xs:string"></xs:element>
+			<!-- PORT.HLCODE -->
+			<xs:element name="hlcode" type="xs:integer"></xs:element>
+			<!-- PORT.PORT_NPCODE -->
+			<xs:element name="npcode" type="xs:integer"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!--
+		MPULKTMB : mapping TMCODE <-> SPCODE <-> SNCODE (use max VSCODE)
+	-->
+	<xs:complexType name="serviceType">
+		<xs:sequence>
+			<!--
+				SELECT LK.SNCODE,LK.SPCODE,SN.DES FROM MPULKTMM LK, MPUSNTAB SN
+				WHERE TMCODE=101 AND LK.SNCODE=SN.SNCODE;
+			-->
+			<!--
+				SELECT SNCODE,S1CODE,S2CODE,SSCODE FROM MPULKNXV (SVCODE=S1CODE or
+				S2CODE or SSCODE)
+			-->
+
+			<!-- MPUSNTAB.SNCODE & MPULKTMM.SNCODE -->
+			<xs:element name="sncode" type="xs:integer"></xs:element>
+			<!-- MPUSPTAB.SPCODE & MPULKTMM.SPCODE -->
+			<xs:element name="service_package_code" type="xs:integer"></xs:element>
+
+			<!--
+				SELECT DN_NUM FROM DIRECTORY_NUMBER WHERE DN_STATUS='r' AND
+				PLCODE=67 AND DN_MODDATE<SYSDATE
+			-->
+			<xs:element name="directory_number" maxOccurs="1"
+				minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="main" use="required" type="xs:boolean">
+							</xs:attribute>
+							<!-- MPDNPTAB.NPCODE & DIRECTORY_NUMBER.DIRNUM_NPCODE -->
+							<xs:attribute name="npcode" use="required" type="xs:integer">
+							</xs:attribute>
+							<xs:attribute name="create_if_unexisting" use="required"
+								type="xs:boolean">
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="cug" maxOccurs="1" type="cugType"
+				minOccurs="0">
+			</xs:element>
+
+
+			<xs:element name="parameter" maxOccurs="unbounded" type="parameterType"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="cugType">
+		<xs:sequence>
+
+			<xs:element name="cugElement" type="cugElementType"
+				maxOccurs="unbounded" minOccurs="1" />
+
+			<xs:element name="bsg" type="bsgType" minOccurs="1"
+				maxOccurs="unbounded" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="cugElementType">
+		<xs:sequence>
+
+			<xs:element name="cugId" type="xs:integer" />
+
+			<xs:element name="bsgId" type="xs:integer" minOccurs="1"
+				maxOccurs="unbounded"></xs:element>
+
+			<xs:element name="parameter" maxOccurs="unbounded" type="parameterType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="bsgType">
+		<xs:sequence>
+
+			<xs:element name="bsgId" type="xs:integer"/>
+			
+			<xs:element name="preferedCugId" type="xs:integer" minOccurs="0"
+				maxOccurs="1"/>
+
+			<xs:element name="parameter" maxOccurs="unbounded" type="parameterType"
+				minOccurs="0" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- MPULKNXV : SNCODE -> SVCODE (SSCODE)       -->
+	<!-- SERVICE_PARAMETER : SVCODE -> PARAMETER_ID & PRM_NO -->
+	<!-- MKT_PARAMETER : PARAMETER_ID & DESCRIPTION -->
+	<!--
+		MKT_PARAMETER_DOMAIN : PARAMETER_ID & PRM_VALUE_STRING & PRM_VALUE_DES
+	-->
+	<!--
+		(les valeurs booleenes true/false sont dans MKT_PARAMETER_RANGE
+		(PRM_DEFAULT)
+	-->
+	<xs:complexType name="parameterType">
+		<xs:sequence>
+			<!--
+				SELECT SP.SCCODE, SP.SVCODE, SP.PARAMETER_ID, MP.PRM_DES FROM
+				SERVICE_PARAMETER SP, MKT_PARAMETER MP WHERE
+				SP.PARAMETER_ID=MP.PARAMETER_ID AND SP.SCCODE=MP.SCCODE AND
+				SVCODE==???
+			-->
+
+			<!--
+				SERVICE_PARAMETER.PARAMETER_ID & MKT_PARAMETER.PARAMETER_ID &
+				PARAMETER_VALUE.PARAMETER_ID
+			-->
+			<xs:element name="id" type="xs:integer"></xs:element>
+			<!-- SERVICE_PARAMETER.PRM_NO -->
+			<xs:element name="no" type="xs:integer"></xs:element>
+
+			<xs:element name="seqno" type="xs:long" minOccurs="0"
+				maxOccurs="unbounded"></xs:element>
+
+			<xs:group ref="GrpDesValue" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:group name="GrpDesValue">
+		<xs:sequence>
+			<xs:element name="value" type="xs:string" />
+			<xs:element name="des" type="xs:string" />
+		</xs:sequence>
+	</xs:group>
+
+	<xs:complexType name="occType">
+		<xs:sequence>
+			<!-- FEES.CUSTOMER_ID & CUSTOMER_ALL.CUSTOMER_ID -->
+			<xs:element name="id" type="custIdType"></xs:element>
+			<xs:element name="action_code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="I" /> <!-- Insert -->
+						<xs:enumeration value="D" /> <!-- Delete -->
+						<!-- Reset action is not supported by v8 -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- FEES.FEE_TYPE -->
+			<xs:element name="fee_type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="R" /> <!-- Recurring -->
+						<xs:enumeration value="N" /> <!-- Non-recurring -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- FEES.FEE_CLASS -->
+			<xs:element name="fee_class">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="1" /> <!-- Credit on the invoice -->
+						<xs:enumeration value="2" /> <!-- Credit on the call -->
+						<xs:enumeration value="3" />
+						<!--
+							Credit/charge, based on an event service generated by a user
+							(OCC)
+						-->
+						<xs:enumeration value="4" /> <!-- Charge, based on an event service generated by the system -->
+						<xs:enumeration value="5" /> <!-- Free unit credit -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<!-- Mandatory when action_code=D -->
+			<!-- FEES.SEQNO -->
+			<xs:element name="seqno" type="xs:long" minOccurs="0" />
+
+			<!-- Mandatory when fee_type=R -->
+			<!-- FEES.PERIOD -->
+			<xs:element name="num_periods" type="xs:integer"
+				minOccurs="0" />
+
+			<!-- Mandatory when fee_class=1 -->
+			<!-- FEES.OHXACT & ORDERHDR_ALL.OHXACT -->
+			<xs:element name="invoice_id" type="xs:long" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=2/5 -->
+			<!-- FEES.CO_ID & CONTRACT_ALL.CO_ID -->
+			<xs:element name="co_id" type="contractIdType" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=2/3/4 -->
+			<!-- FEES.TMCODE & RATEPLAN.TMCODE -->
+			<xs:element name="rate_plan_code" type="xs:long"
+				minOccurs="0" />
+			<!-- FEES.VSCODE -->
+			<xs:element name="rate_plan_version" type="xs:long"
+				minOccurs="0" />
+			<!-- FEES.SPCODE & MPUSPTAB.SPCODE -->
+			<xs:element name="service_package_code" type="xs:long"
+				minOccurs="0" />
+			<!-- FEES.SNCODE & MPUSNTAB.SNCODE -->
+			<xs:element name="sncode" type="xs:long" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=2 -->
+			<!-- FEES.CDR_ID -->
+			<xs:element name="record_id" type="xs:integer" minOccurs="0" />
+			<!-- FEES.CDR_SUB_ID -->
+			<xs:element name="record_sub_id" type="xs:integer"
+				minOccurs="0" />
+			<!-- FEES.UDR_BASEPART_ID -->
+			<xs:element name="base_part_id" type="xs:integer"
+				minOccurs="0" />
+			<!-- FEES.UDR_CHARGEPART_ID -->
+			<xs:element name="charge_part_id" type="xs:integer"
+				minOccurs="0" />
+
+			<!-- Mandatory when fee_class=4 -->
+			<!-- FEES.EVCODE & MPULKEXN.EVCODE -->
+			<xs:element name="event_code" type="xs:long" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=2/3 -->
+			<!-- FEES.AMOUNT & FEES.CURRENCY -->
+			<xs:element name="fee_amount" type="moneyType" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=5 -->
+			<!-- FEES.FU_PACK_ID & FU_PACK.FU_PACK_ID -->
+			<xs:element name="fu_pack_id" type="xs:integer" minOccurs="0" />
+			<!-- FEES.FREE_UNITS_NUMBER -->
+			<xs:element name="num_fu" type="xs:float" minOccurs="0" />
+
+			<!-- Optional for fee_class=5 -->
+			<xs:element name="fu_ver" type="xs:integer" minOccurs="0" />
+			<xs:element name="fu_pkver" type="xs:integer" minOccurs="0" />
+			<xs:element name="fu_pkelsq" type="xs:integer" minOccurs="0" />
+
+			<!-- Mandatory when fee_class=2 and fee_type=N-->
+			<xs:element name="glcode" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="glcodedisc" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="glcodemin" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="servcat_code" type="xs:string"
+				minOccurs="0"></xs:element>
+			<xs:element name="serv_code" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="serv_type" type="xs:string" minOccurs="0"></xs:element>
+
+			<!-- Not mandatory -->
+			<!--
+				If this field is not present, CMSInterface will insert
+				CMS_INT.REQUEST_ID in FEES.REMARK
+			-->
+			<xs:element name="remark" type="xs:string" minOccurs="0"></xs:element>
+			<xs:element name="valid_from" type="xs:date" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="moneyType">
+		<xs:sequence>
+			<xs:element name="amount" type="xs:double" />
+			<xs:element name="currency" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!--
+		BILLING_ACCOUNT.BILLING_ACCOUNT_ID & BILLING_ACCOUNT.CSBILLMEDIUM
+	-->
+	<xs:complexType name="billingAccountType">
+		<xs:sequence>
+			<!--
+				0 : Primary Billing Account id >0 : customer billing account which
+				needs to modify the billing medium <0 : Virtual id for contracts
+				which will be created
+			-->
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="billing_medium" type="xs:long"
+				minOccurs="0" />
+
+			<!--  For the action, modify customer -->
+			<xs:element name="termcode" type="xs:integer" minOccurs="0" />
+			<xs:element name="individualtax_from_ind" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- CUSTOMER_TAX_EXEMPTION & BILLING_ACCOUNT_TAX_EXEMPTION -->
+	<xs:complexType name="taxExemptionType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+
+			<!--
+				if the exemptType == T code will set the CST_TAX_CODE Parameters
+			-->
+			<!--
+				if the exemptType == J code will set the CST_JURISDICTION_TYPE
+				Parameters
+			-->
+			<xs:element name="code" type="xs:long" />
+			<xs:element name="exemptType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="T" /> <!-- exempted from a specific Tax (Tax Code) -->
+						<xs:enumeration value="J" /> <!-- exempted from the Jurisdiction type -->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- Rate should be 0 < rate <= 1 -->
+			<xs:element name="rate" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

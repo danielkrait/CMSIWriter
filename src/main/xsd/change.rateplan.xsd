@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:include schemaLocation="customer_types.xsd"/>
+    
+    <xs:element name="customer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contract" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="contractIdType"></xs:element>
+                            <xs:element name="target_rateplan_code"	type="xs:long"></xs:element>
+                            <!-- If the SPCODE value is 0, then the service package used will 
+                            be the first containing SNCODE for the Contract rateplan. -->
+                            <xs:element name="service" type="serviceType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+       
+</xs:schema>

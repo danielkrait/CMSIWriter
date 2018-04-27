@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- CMS MICROCELL_MEMBERS.WRITE (Kernal)-->
+
+	<xs:include schemaLocation="customer_types.xsd" />
+
+	<xs:element name="microcell">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- 'A' - Assign the members, 'M' - Modify the members, 'D' - Delete the members --> 
+				<xs:element name="ACTION"
+					type="xs:string" minOccurs="1">
+				</xs:element>
+				<!-- Global microcell identifier --> 
+				<xs:element name="HRCODE"
+					type="xs:long" minOccurs="1">
+				</xs:element>
+        <!-- Public key of the global microcell -->
+				<xs:element name="HRCODE_PUB"
+					type="xs:string" minOccurs="1">
+				</xs:element>
+
+				<xs:element name="microcell_members" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<!--  Mandatory for modification and delete-->
+							<xs:element name="MM_ID" type="xs:long"></xs:element>
+							<xs:element name="DEST_CODE"
+								type="xs:long">
+							</xs:element>
+							<!-- MPULKFXO.DESTINATION -->
+							<xs:element name="DEST_NUMBER"
+								type="xs:string">
+							</xs:element>
+							<!-- MPULKFXO.DEST_NPCODE -->
+							<xs:element name="NUMBERING_PLAN"
+								type="xs:long">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+
+

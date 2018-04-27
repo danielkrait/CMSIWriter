@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: A669286
+Build-Jdk: 1.8.0_141
+Implementation-Title: CMSIWriter
+Implementation-Version: 0.20
+Implementation-Vendor-Id: com.alcatel-lucent
+Created-By: Maven Integration for Eclipse
+Implementation-Build: 
+
