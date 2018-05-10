@@ -6,7 +6,7 @@
  *------------------------------------------------------------------------------
  *   Copyright (c) 2010 ALCATEL-LUCENT - All rights reserved
  *------------------------------------------------------------------------------
- *   CREATION DATE: 18 août 2010                          Author: tpeltier
+ *   CREATION DATE: 18 aoï¿½t 2010                          Author: tpeltier
  *------------------------------------------------------------------------------
  *
  *  HISTORY:
@@ -24,7 +24,7 @@ package com.alu.cmsi.writer.common;
 
 /**
  * @version CmsStatus.java
- * @version Created on 18 août 2010, 11:56:51
+ * @version Created on 18 2010, 11:56:51
  * @author tpeltier
  */
 public final class CmsStatus {

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="maven-antrun-" default="main"  >
 <target name="main">
-  <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask"/>
-  <xjc schema="src/main/xsd/add.delete.microcell.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.addDeleteMicrocell"/>
-  <xjc schema="src/main/xsd/add.service.list.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.addServiceList"/>
-  <xjc schema="src/main/xsd/change.contract.status.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.changeContractStatus"/>
-  <xjc schema="src/main/xsd/change.rateplan.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.changeRateplan"/>
-  <xjc schema="src/main/xsd/convert.to.flat.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.convertToFlat"/>
-  <xjc schema="src/main/xsd/create.contract.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.createContract"/>
-  <xjc schema="src/main/xsd/create.customer.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.createCustomer"/>
-  <xjc schema="src/main/xsd/create.large.account.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.createLargeAccount"/>
-  <xjc schema="src/main/xsd/create.tickler.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.createTickler"/>
-  <xjc schema="src/main/xsd/del.service.list.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.delServiceList"/>
-  <xjc schema="src/main/xsd/family.move.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.familyMove"/>
-  <xjc schema="src/main/xsd/modify.contract.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.modifyContract"/>
-  <xjc schema="src/main/xsd/modify.customer.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.modifyCustomer"/>
-  <xjc schema="src/main/xsd/modify.microcell.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.modifyMicrocell"/>
-  <xjc schema="src/main/xsd/modify.service.parameter.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.modifyServiceParameter"/>
-  <xjc schema="src/main/xsd/occ.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.occ"/>
-  <xjc schema="src/main/xsd/payment.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.payment"/>
-  <xjc schema="src/main/xsd/modify.service.access.fee.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.modifyServiceAccessFee"/>
-  <xjc schema="src/main/xsd/contract.takeover.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.contractTakeover"/>
-  <xjc schema="src/main/xsd/resource.update.xsd" destdir="src/main/java" package="com.alu.cmsi.writer.beans.resourceUpdate"/>
+  <taskdef classname="com.sun.tools.xjc.XJCTask" name="xjc"/>
+  <xjc schema="src/main/xsd/add.delete.microcell.xsd" package="com.alu.cmsi.writer.beans.addDeleteMicrocell" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/add.service.list.xsd" package="com.alu.cmsi.writer.beans.addServiceList" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/change.contract.status.xsd" package="com.alu.cmsi.writer.beans.changeContractStatus" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/change.rateplan.xsd" package="com.alu.cmsi.writer.beans.changeRateplan" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/convert.to.flat.xsd" package="com.alu.cmsi.writer.beans.convertToFlat" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/create.contract.xsd" package="com.alu.cmsi.writer.beans.createContract" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/create.customer.xsd" package="com.alu.cmsi.writer.beans.createCustomer" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/create.large.account.xsd" package="com.alu.cmsi.writer.beans.createLargeAccount" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/create.tickler.xsd" package="com.alu.cmsi.writer.beans.createTickler" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/del.service.list.xsd" package="com.alu.cmsi.writer.beans.delServiceList" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/family.move.xsd" package="com.alu.cmsi.writer.beans.familyMove" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/modify.contract.xsd" package="com.alu.cmsi.writer.beans.modifyContract" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/modify.customer.xsd" package="com.alu.cmsi.writer.beans.modifyCustomer" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/modify.microcell.xsd" package="com.alu.cmsi.writer.beans.modifyMicrocell" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/modify.service.parameter.xsd" package="com.alu.cmsi.writer.beans.modifyServiceParameter" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/occ.xsd" package="com.alu.cmsi.writer.beans.occ" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/payment.xsd" package="com.alu.cmsi.writer.beans.payment" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/modify.service.access.fee.xsd" package="com.alu.cmsi.writer.beans.modifyServiceAccessFee" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/contract.takeover.xsd" package="com.alu.cmsi.writer.beans.contractTakeover" destdir="src/main/java"/>
+  <xjc schema="src/main/xsd/resource.update.xsd" package="com.alu.cmsi.writer.beans.resourceUpdate" destdir="src/main/java"/>
 </target>
 </project>
