@@ -14,7 +14,7 @@
         <java.compiler.version>1.6</java.compiler.version>
         <product.application.name>CMSIWriter</product.application.name>
         <repository.id>internal</repository.id>
-        <!-- <repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url> -->
+         <repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url>
     </properties>
     <repositories>
         <repository>
@@ -85,24 +85,24 @@
             <version>4.9</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/jta-1.0.1B.jar</systemPath>
 		</dependency>
-		<dependency>
+		 <dependency>
 			<groupId>com.lhs</groupId>
 			<artifactId>jmxtools</artifactId>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/jmxtools-1.2.1.jar</systemPath>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>com.lhs</groupId>
 			<artifactId>jmxri</artifactId>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/jmxri-1.2.1.jar</systemPath>
-		</dependency>
+		</dependency>-->
     </dependencies>
     
     <build>
@@ -351,16 +351,22 @@
     			<groupId>javax.transaction</groupId>
     			<artifactId>jta</artifactId>
     			<version>1.0.1B</version>
+    			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/jta-1.0.1B.jar</systemPath>
     		</dependency>
     		<dependency>
     			<groupId>com.lhs</groupId>
     			<artifactId>jmxtools</artifactId>
     			<version>1.2.1</version>
+    			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/jmxtools-1.2.1.jar</systemPath>
     		</dependency>
     		<dependency>
     			<groupId>com.lhs</groupId>
     			<artifactId>jmxri</artifactId>
     			<version>1.2.1</version>
+    			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/jmxri-1.2.1.jar</systemPath>
     		</dependency>
     	</dependencies>
     </dependencyManagement>
