@@ -14,7 +14,7 @@
         <java.compiler.version>1.6</java.compiler.version>
         <product.application.name>CMSIWriter</product.application.name>
         <repository.id>internal</repository.id>
-         <repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url>
+         <!--<repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url>-->
     </properties>
     <repositories>
         <repository>
