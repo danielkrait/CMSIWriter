@@ -14,7 +14,7 @@
 		<java.compiler.version>1.6</java.compiler.version>
 		<product.application.name>CMSIWriter</product.application.name>
 		<repository.id>internal</repository.id>
-		<!--<repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url>-->
+		<!--<repository.url>http://172.201.33.95:8090/archiva/repository/internal</repository.url> -->
 		<repository.url>http://builds.archive.org/maven2</repository.url>
 	</properties>
 	<repositories>
@@ -24,6 +24,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>adobe-public</id>
+			<url>https://repo.adobe.com/nexus/content/repositories/public/</url>
 		</repository>
 	</repositories>
 	<distributionManagement>
