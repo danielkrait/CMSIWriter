@@ -345,29 +345,4 @@
     	<url>http://lbstool.lbs.alcatel.com:8085/hudson/job/CMSIWriter/</url>
     	<system>Hudson</system>
     </ciManagement>
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>javax.transaction</groupId>
-    			<artifactId>jta</artifactId>
-    			<version>1.0.1B</version>
-    			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/jta-1.0.1B.jar</systemPath>
-    		</dependency>
-    		<dependency>
-    			<groupId>com.lhs</groupId>
-    			<artifactId>jmxtools</artifactId>
-    			<version>1.2.1</version>
-    			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/jmxtools-1.2.1.jar</systemPath>
-    		</dependency>
-    		<dependency>
-    			<groupId>com.lhs</groupId>
-    			<artifactId>jmxri</artifactId>
-    			<version>1.2.1</version>
-    			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/jmxri-1.2.1.jar</systemPath>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>
